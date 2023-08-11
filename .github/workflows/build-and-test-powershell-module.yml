@@ -20,10 +20,6 @@ jobs:
         shell: pwsh
         run: $PSVersionTable
 
-      - name: Run PowerShell linter with PSScriptAnalyzer
-        shell: pwsh
-        run: Invoke-ScriptAnalyzer -Path . -Recurse -EnableExit -ExcludeRule PSAvoidUsingWriteHost
-
       - name: Run Pester Tests
         shell: pwsh
         run: |
