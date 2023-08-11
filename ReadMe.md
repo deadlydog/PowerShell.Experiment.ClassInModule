@@ -1,6 +1,6 @@
 # PowerShell Experiment with a Class in a Module
 
-This is a test repo to reproduce an issue I am having with Pester not finding the class when it is defined in a separate file in the module, rather than directly in the psm1 file.
+This is a test repo to reproduce an issue I am having with Pester not finding the class type when it is defined in a separate file in the module, rather than directly in the psm1 file.
 
 ## The problem
 
