@@ -1,0 +1,4 @@
+class MyClassInSeparateFile
+{
+	[string] $Name
+}

@@ -1,8 +1,8 @@
-using module .\MyModule.psm1
+using module .\ModuleWithClassInPsm1.psm1
 
-Describe 'MyModule' {
+Describe 'Module' {
 	It 'Should return a new class instance without error' {
-		$instance = Get-MyClass
+		$instance = Get-MyClassInPsm1
 		$instance | Should -Not -Be $null
 	}
 }
