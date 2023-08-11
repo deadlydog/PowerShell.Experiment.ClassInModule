@@ -1,38 +1,12 @@
-# Template Git Repository
+# PowerShell Experiment with a Class in a Module
 
-This is just a simple template repository that I use to start my git repos from to avoid having to add some boilerplate things.
+This is a test repo to reproduce an issue I am having with Pester not finding the class when it is defined in a separate file in the module, rather than directly in the psm1 file.
 
-## 💬 Description
+## The problem
 
-A short description of what this project does.
+If a class is created in the psm1 file of a module, then Pester can find it and use it in tests.
+However, if the class is defined in a separate file in the module, then Pester cannot find it, failing with an error like:
 
-## ❓ Why this exists
+> Unable to find type [MyClass]
 
-A short description of why this project exists.
-What use-case is it meant to solve?
-
-## 🚀 Quick start
-
-A quick guide on how to get started with this project.
-Install a NuGet Package?
-Code snippets?
-Links to wiki or other documentation.
-
-## ➕ How to contribute
-
-Issues and Pull Requests are welcome.
-See [the Contributing page](docs/Contributing.md) for more details.
-
-## 📃 Changelog
-
-See what's changed in the application over time by viewing [the changelog](Changelog.md).
-
-## 💳 Donate
-
-Buy me a [CANADIAN ITEM] for providing this [EXTENSION|APP|SCRIPT] open source and for free 🙂
-
-FOR A GENERIC DONATE LINK USE THIS BUTTON
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/deadlydogDan/5USD)
-
-FOR AN APP SPECIFIC DONATE LINK [GO HERE](https://www.paypal.com/cgi-bin/webscr?cmd=_button-management) AND CREATE A NEW BUTTON, THEN REPLACE THE `BUTTON_ID_GOES_HERE` WITH THE NEW BUTTON'S ID
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BUTTON_ID_GOES_HERE)
+Even stranger, is that this issue does not happen on my local machine, but does happen on the build server with GitHub Actions.
