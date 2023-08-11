@@ -10,8 +10,27 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-test:
+  build-and-test-on-ubuntu:
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo source code
+        uses: actions/checkout@v3
+
+      - name: Display PowerShell version being used
+        shell: pwsh
+        run: $PSVersionTable
+
+      - name: Run Pester Tests
+        shell: pwsh
+        run: |
+          Write-Output "Pester version being used:"
+          Import-Module -Name Pester
+          Get-Module -Name Pester
+
+          Write-Output "Running all Pester tests in the repo:"
+          Invoke-Pester
+  build-and-test-on-windows:
+    runs-on: windows-latest
     steps:
       - name: Checkout the repo source code
         uses: actions/checkout@v3
