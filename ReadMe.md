@@ -22,3 +22,7 @@ You could also simply run `Invoke-Pester` from the PowerShell terminal at the re
 When Pester runs on the build server with GitHub Actions though, the MyClassInSeparateFile module fails with the error above.
 
 [![build and test workflow](https://github.com/deadlydog/PowerShell.Experiment.ClassInModule/actions/workflows/build-and-test-powershell-module.yml/badge.svg)](https://github.com/deadlydog/PowerShell.Experiment.ClassInModule/actions/workflows/build-and-test-powershell-module.yml)
+
+## Solution
+
+It seems that everything works fine if instead of using `using module` to import the class, we dot-source the class file instead, as shown by the [ModuleWithClassInSeparateFileIncludedWithDotSourcing psm1 file](/src/ModuleWithClassInSeparateFileIncludedWithDotSourcing/ModuleWithClassInSeparateFileIncludedWithDotSourcing.psm1).
