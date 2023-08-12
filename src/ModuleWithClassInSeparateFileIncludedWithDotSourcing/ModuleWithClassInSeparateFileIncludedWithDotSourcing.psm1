@@ -1,4 +1,4 @@
-. .\Classes\MyClassInSeparateFile.ps1
+. "$PSScriptRoot\Classes\MyClassInSeparateFile.ps1"
 
 function Get-MyClassInSeparateFile
 {
