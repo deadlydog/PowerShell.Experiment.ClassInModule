@@ -1,0 +1,4 @@
+class MyClassInSeparateFileIncludedWithDotSourcing
+{
+	[string] $Name
+}

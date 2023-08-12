@@ -1,4 +1,0 @@
-class MyClassInSeparateFile
-{
-	[string] $Name
-}

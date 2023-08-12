@@ -1,8 +1,8 @@
-using module .\Classes\MyClassInSeparateFile.ps1
+using module .\Classes\MyClassInSeparateFileIncludedWithUsing.ps1
 
-function Get-MyClassInSeparateFile
+function Get-MyClassInSeparateFileIncludedWithUsing
 {
-	return [MyClassInSeparateFile]::new()
+	return [MyClassInSeparateFileIncludedWithUsing]::new()
 }
 
-Export-ModuleMember -Function Get-MyClassInSeparateFile
+Export-ModuleMember -Function Get-MyClassInSeparateFileIncludedWithUsing

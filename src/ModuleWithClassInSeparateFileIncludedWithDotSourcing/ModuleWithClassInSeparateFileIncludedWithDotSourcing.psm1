@@ -1,8 +1,8 @@
-. "$PSScriptRoot\Classes\MyClassInSeparateFile.ps1"
+. "$PSScriptRoot\Classes\MyClassInSeparateFileIncludedWithDotSourcing.ps1"
 
-function Get-MyClassInSeparateFile
+function Get-MyClassInSeparateFileIncludedWithDotSourcing
 {
-	return [MyClassInSeparateFile]::new()
+	return [MyClassInSeparateFileIncludedWithDotSourcing]::new()
 }
 
-Export-ModuleMember -Function Get-MyClassInSeparateFile
+Export-ModuleMember -Function Get-MyClassInSeparateFileIncludedWithDotSourcing
