@@ -5,7 +5,7 @@ This is a test repo to reproduce an issue I am having with Pester not finding th
 ## The problem
 
 If a class is created in the psm1 file of a module, then Pester can find it and use it in tests.
-However, if the class is defined in a separate file in the module, then Pester cannot find it, failing with an error like:
+However, if the class is defined in a separate file in the module and included with a `using module` statement, then Pester cannot find it, failing with an error like:
 
 > Unable to find type [MyClassInSeparateFile]
 

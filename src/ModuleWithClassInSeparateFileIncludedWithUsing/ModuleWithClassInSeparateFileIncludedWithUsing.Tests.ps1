@@ -1,4 +1,4 @@
-using module .\ModuleWithClassInSeparateFile.psm1
+using module .\ModuleWithClassInSeparateFileIncludedWithUsing.psm1
 
 Describe 'Module' {
 	It 'Should return a new class instance without error' {
