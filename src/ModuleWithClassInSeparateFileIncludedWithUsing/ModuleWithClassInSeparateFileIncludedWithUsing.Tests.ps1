@@ -5,4 +5,9 @@ Describe 'Module' {
 		$instance = Get-MyClassInSeparateFileIncludedWithUsing
 		$instance | Should -Not -Be $null
 	}
+
+	It 'Should allow using the class type explicitly' {
+		$instance = [MyClassInSeparateFileIncludedWithUsing]::new()
+		$instance | Should -Not -Be $null
+	}
 }

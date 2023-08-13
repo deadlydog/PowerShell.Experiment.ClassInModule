@@ -5,4 +5,9 @@ Describe 'Module' {
 		$instance = Get-MyClassInPsm1
 		$instance | Should -Not -Be $null
 	}
+
+	It 'Should allow using the class type explicitly' {
+		$instance = [MyClassInPsm1]::new()
+		$instance | Should -Not -Be $null
+	}
 }
