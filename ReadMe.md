@@ -38,6 +38,7 @@ When I run the `test` task locally from VS Code (e.g. run the `Tasks: Run Test T
 You could also simply run `Invoke-Pester` from the PowerShell terminal at the repo root directory to run the tests.
 
 When Pester runs on the build server with GitHub Actions though, the `using module` module fails with the error above.
+See [the failing GitHub Action workflow](https://github.com/deadlydog/PowerShell.Experiment.ClassInModule/actions/workflows/build-and-test-powershell-module.yml) for the error message details.
 
 [![build and test workflow](https://github.com/deadlydog/PowerShell.Experiment.ClassInModule/actions/workflows/build-and-test-powershell-module.yml/badge.svg)](https://github.com/deadlydog/PowerShell.Experiment.ClassInModule/actions/workflows/build-and-test-powershell-module.yml)
 
