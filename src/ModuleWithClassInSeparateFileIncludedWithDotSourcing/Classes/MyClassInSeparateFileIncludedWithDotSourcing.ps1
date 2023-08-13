@@ -1,4 +1,9 @@
+enum MyEnumInSeparateFileIncludedWithDotSourcing
+{
+	One
+}
+
 class MyClassInSeparateFileIncludedWithDotSourcing
 {
-	[string] $Name
+	[MyEnumInSeparateFileIncludedWithDotSourcing] $EnumValue
 }

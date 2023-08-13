@@ -1,4 +1,9 @@
+enum MyEnumInSeparateFileIncludedWithUsing
+{
+	One
+}
+
 class MyClassInSeparateFileIncludedWithUsing
 {
-	[string] $Name
+	[MyEnumInSeparateFileIncludedWithUsing] $EnumValue
 }

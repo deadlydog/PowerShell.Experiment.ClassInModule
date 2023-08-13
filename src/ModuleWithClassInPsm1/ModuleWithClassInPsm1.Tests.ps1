@@ -10,4 +10,14 @@ Describe 'Module' {
 		$instance = [MyClassInPsm1]::new()
 		$instance | Should -Not -Be $null
 	}
+
+	It 'Should return a new enum instance without error' {
+		$enumValue = Get-MyEnumInPsm1
+		$enumValue | Should -Be 'One'
+	}
+
+	It 'Should allow using the enum type explicitly' {
+		$enumValue = [MyEnumInPsm1]::One
+		$enumValue | Should -Be 'One'
+	}
 }

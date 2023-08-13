@@ -10,4 +10,14 @@ Describe 'Module' {
 		$instance = [MyClassInSeparateFileIncludedWithUsing]::new()
 		$instance | Should -Not -Be $null
 	}
+
+	It 'Should return a new enum instance without error' {
+		$enumValue = Get-MyEnumInSeparateFileIncludedWithUsing
+		$enumValue | Should -Be 'One'
+	}
+
+	It 'Should allow using the enum type explicitly' {
+		$enumValue = [MyEnumInSeparateFileIncludedWithUsing]::One
+		$enumValue | Should -Be 'One'
+	}
 }
