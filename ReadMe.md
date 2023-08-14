@@ -42,6 +42,10 @@ See [the failing GitHub Action workflow](https://github.com/deadlydog/PowerShell
 
 [![build and test workflow](https://github.com/deadlydog/PowerShell.Experiment.ClassInModule/actions/workflows/build-and-test-powershell-module.yml/badge.svg)](https://github.com/deadlydog/PowerShell.Experiment.ClassInModule/actions/workflows/build-and-test-powershell-module.yml)
 
+Update: To remove my local machine from the equation, I created a Dev Container that can be used to run the VS Code `test` task locally from a Docker container.
+Using the Dev Container produces the same results as the GitHub Action.
+My local machine must somehow be caching the types, even across new and separate PowerShell sessions.
+
 ## Experiment results
 
 The results of the experiment are as follows:
@@ -58,16 +62,12 @@ If we dot-source the file with the class, then the class can be used by the modu
 
 If we define the class in the psm1 file, then the class can be used by the module functions, and the class type can be used outside of the module.
 
-Enums behave the same as classes with regards to these tests.
+Enums behave the same as classes with regard to these tests.
 
 ## Conclusion
 
-The best approach, as of PowerShell version 7.1.3, is to define the class/enum in the psm1 file of the module.
+The best approach, as of PowerShell version 7.1.3, is to define the class/enum directly in the psm1 file of the module.
 
 If you really want to have your classes/enums in separate files, and you don't intend for the class/enum types to be used outside of the module, then you can use dot-sourcing to import the class file.
 
 Hopefully future versions of PowerShell will allow us to use either `using module` or dot-sourcing to import the class/enum file, and still be able to use the class/enum in the module functions, and the class/enum type outside of the module.
-
-I did not discover why the `using module` approach works locally, but not on the build server.
-I assume something must be cached somehow on my machine, even between PowerShell sessions.
-I am going to assume this is an anomaly with my machine though and trust the GitHub Action results above my local machine results.
