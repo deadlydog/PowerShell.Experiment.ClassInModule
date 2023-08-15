@@ -23,10 +23,15 @@ This repo contains 3 modules:
 1. One with the class defined in a separate file and imported [via dot-sourcing](/src/ModuleWithClassInSeparateFileIncludedWithDotSourcing/ModuleWithClassInSeparateFileIncludedWithDotSourcing.psm1).
 1. One with the class defined [in the psm1 file](/src/ModuleWithClassInPsm1/ModuleWithClassInPsm1.psm1).
 
-Each module also contains Pester tests to test:
+Each module contains Pester tests to test:
 
 - The class can be used by the module functions.
 - The class type can be used outside of the module.
+
+Each Pester test file is duplicated so it can reference the module in 2 ways:
+
+- Using `using module` to import the module.
+- Using `Import-Module` to import the module.
 
 In addition to defining classes in various ways and testing them, we also define and tests enums in the same ways to see if they suffer from the same issues.
 
@@ -48,13 +53,15 @@ My local machine must somehow be caching the types, even across new and separate
 
 ## Experiment results
 
-The results of the experiment are as follows:
+### Referencing the class/enum in the module
 
-|                                         | Class/Enum can be used by module functions | Class/Enum type can be used outside of module |
-| --------------------------------------- | ------------------------------------------ | --------------------------------------------- |
-| Class/Enum imported with `using module` | ❌                                          | ❌                                             |
-| Class/Enum imported with Dot-sourcing   | ✔️                                          | ❌                                             |
-| Class/Enum defined in psm1              | ✔️                                          | ✔️                                             |
+The results of using the different methods to reference a class/enum in the module are as follows:
+
+|                                              | Class/Enum can be used by module functions | Class/Enum type can be used outside of module |
+| -------------------------------------------- | ------------------------------------------ | --------------------------------------------- |
+| Class/Enum file imported with `using module` | ❌                                         | ❌                                            |
+| Class/Enum file imported with Dot-sourcing   | ✔️                                         | ❌                                            |
+| Class/Enum defined in psm1 file              | ✔️                                         | ✔️                                            |
 
 If we use `using module` to import the file with the class, then the class cannot be used by the module functions, and the class type cannot be used outside of the module.
 
@@ -64,10 +71,22 @@ If we define the class in the psm1 file, then the class can be used by the modul
 
 Enums behave the same as classes with regard to these tests.
 
+### Referencing the module
+
+We also tested the 2 different ways a module can be imported:
+
+|                                      | Class/Enum can be used by module functions | Class/Enum type can be used outside of module |
+| ------------------------------------ | ------------------------------------------ | --------------------------------------------- |
+| Module imported with `Import-Module` | ✔️                                         | ❌                                           |
+| Module imported with `using module`  | ✔️                                         | ✔️                                           |
+
+The only way to be able to reference the class/enum types outside of the module is to import the module with `using module`.
+
 ## Conclusion
 
 The best approach, as of PowerShell version 7.1.3, is to define the class/enum directly in the psm1 file of the module.
+Also, modules should be imported with `using module` if you want to be able to use the class/enum types outside of the module.
 
-If you really want to have your classes/enums in separate files, and you don't intend for the class/enum types to be used outside of the module, then you can use dot-sourcing to import the class file.
+If you really want to have your classes/enums in separate files, and you don't intend for the class/enum types to be used outside of the module, then you can use dot-sourcing to import the class file and use `Import-Module` to import the module.
 
-Hopefully future versions of PowerShell will allow us to use either `using module` or dot-sourcing to import the class/enum file, and still be able to use the class/enum in the module functions, and the class/enum type outside of the module.
+Hopefully a future version of PowerShell will allow us to dot-source import classes/enums from other files and still be able to use their types both within and outside the module.
