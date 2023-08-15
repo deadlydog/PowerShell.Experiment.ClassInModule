@@ -1,4 +1,4 @@
-using module .\Classes\MyClassInSeparateFileIncludedWithUsing.psm1
+using module .\Classes\MyClassInSeparateFileIncludedWithUsing.ps1
 
 function Get-MyClassInSeparateFileIncludedWithUsing
 {
