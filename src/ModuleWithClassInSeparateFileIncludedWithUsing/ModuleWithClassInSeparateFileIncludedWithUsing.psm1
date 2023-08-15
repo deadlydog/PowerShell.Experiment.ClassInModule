@@ -10,5 +10,11 @@ function Get-MyEnumInSeparateFileIncludedWithUsing
 	return [MyEnumInSeparateFileIncludedWithUsing]::One
 }
 
+function Get-MyEnumInSeparateFileIncludedWithUsingWithParameter([MyEnumInSeparateFileIncludedWithUsing] $enumValue)
+{
+	return $enumValue
+}
+
 Export-ModuleMember -Function Get-MyClassInSeparateFileIncludedWithUsing
 Export-ModuleMember -Function Get-MyEnumInSeparateFileIncludedWithUsing
+Export-ModuleMember -Function Get-MyEnumInSeparateFileIncludedWithUsingWithParameter

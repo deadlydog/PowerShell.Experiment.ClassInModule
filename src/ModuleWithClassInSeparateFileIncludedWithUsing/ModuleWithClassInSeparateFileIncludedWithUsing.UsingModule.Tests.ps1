@@ -20,4 +20,14 @@ Describe 'Module' {
 		$enumValue = [MyEnumInSeparateFileIncludedWithUsing]::One
 		$enumValue | Should -Be 'One'
 	}
+
+	It 'Should allow using the full enum type as a function parameter' {
+		$enumValue = Get-MyEnumInSeparateFileIncludedWithUsingWithParameter -enumValue ([MyEnumInSeparateFileIncludedWithUsing]::One)
+		$enumValue | Should -Be 'One'
+	}
+
+	It 'Should allow using the enum string value as a function parameter' {
+		$enumValue = Get-MyEnumInSeparateFileIncludedWithUsingWithParameter -enumValue One
+		$enumValue | Should -Be 'One'
+	}
 }

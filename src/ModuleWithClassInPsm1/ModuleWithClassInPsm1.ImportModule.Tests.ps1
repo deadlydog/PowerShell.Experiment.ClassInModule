@@ -22,4 +22,14 @@ Describe 'Module' {
 		$enumValue = [MyEnumInPsm1]::One
 		$enumValue | Should -Be 'One'
 	}
+
+	It 'Should allow using the full enum type as a function parameter' {
+		$enumValue = Get-MyEnumInPsm1WithParameter -enumValue ([MyEnumInPsm1]::One)
+		$enumValue | Should -Be 'One'
+	}
+
+	It 'Should allow using the enum string value as a function parameter' {
+		$enumValue = Get-MyEnumInPsm1WithParameter -enumValue One
+		$enumValue | Should -Be 'One'
+	}
 }

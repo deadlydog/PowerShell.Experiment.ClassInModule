@@ -1,6 +1,7 @@
 enum MyEnumInPsm1
 {
 	One
+	Two
 }
 
 class MyClassInPsm1
@@ -18,5 +19,11 @@ function Get-MyEnumInPsm1
 	return [MyEnumInPsm1]::One
 }
 
+function Get-MyEnumInPsm1WithParameter([MyEnumInPsm1] $enumValue)
+{
+	return $enumValue
+}
+
 Export-ModuleMember -Function Get-MyClassInPsm1
 Export-ModuleMember -Function Get-MyEnumInPsm1
+Export-ModuleMember -Function Get-MyEnumInPsm1WithParameter

@@ -22,4 +22,14 @@ Describe 'Module' {
 		$enumValue = [MyEnumInSeparateFileIncludedWithDotSourcing]::One
 		$enumValue | Should -Be 'One'
 	}
+
+	It 'Should allow using the full enum type as a function parameter' {
+		$enumValue = Get-MyEnumInSeparateFileIncludedWithDotSourcingWithParameter -enumValue ([MyEnumInSeparateFileIncludedWithDotSourcing]::One)
+		$enumValue | Should -Be 'One'
+	}
+
+	It 'Should allow using the enum string value as a function parameter' {
+		$enumValue = Get-MyEnumInSeparateFileIncludedWithDotSourcingWithParameter -enumValue One
+		$enumValue | Should -Be 'One'
+	}
 }

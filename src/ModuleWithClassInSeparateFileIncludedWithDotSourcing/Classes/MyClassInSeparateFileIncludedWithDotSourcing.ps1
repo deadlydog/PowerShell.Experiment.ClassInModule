@@ -1,6 +1,7 @@
 enum MyEnumInSeparateFileIncludedWithDotSourcing
 {
 	One
+	Two
 }
 
 class MyClassInSeparateFileIncludedWithDotSourcing

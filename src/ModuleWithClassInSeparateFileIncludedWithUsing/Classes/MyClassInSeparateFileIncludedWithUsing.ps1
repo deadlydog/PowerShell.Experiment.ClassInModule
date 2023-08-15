@@ -1,6 +1,7 @@
 enum MyEnumInSeparateFileIncludedWithUsing
 {
 	One
+	Two
 }
 
 class MyClassInSeparateFileIncludedWithUsing
