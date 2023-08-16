@@ -13,6 +13,18 @@ Describe 'Module' {
 		$instance | Should -Not -Be $null
 	}
 
+	It 'Should allow using the class type implicitly as a function parameter' {
+		$implicitInstance = Get-MyClassInSeparateFileIncludedWithDotSourcing
+		$instance = Get-MyClassInSeparateFileIncludedWithDotSourcingWithParameter -instance $implicitInstance
+		$instance | Should -Not -Be $null
+	}
+
+	It 'Should allow using the class type explicitly as a function parameter' {
+		$explicitInstance = [MyClassInSeparateFileIncludedWithDotSourcing]::new()
+		$instance = Get-MyClassInSeparateFileIncludedWithDotSourcingWithParameter -instance $explicitInstance
+		$instance | Should -Not -Be $null
+	}
+
 	It 'Should return a new enum instance without error' {
 		$enumValue = Get-MyEnumInSeparateFileIncludedWithDotSourcing
 		$enumValue | Should -Be 'One'

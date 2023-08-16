@@ -5,6 +5,11 @@ function Get-MyClassInSeparateFileIncludedWithUsing
 	return [MyClassInSeparateFileIncludedWithUsing]::new()
 }
 
+function Get-MyClassInSeparateFileIncludedWithUsingWithParameter([MyClassInSeparateFileIncludedWithUsing] $instance)
+{
+	return $instance
+}
+
 function Get-MyEnumInSeparateFileIncludedWithUsing
 {
 	return [MyEnumInSeparateFileIncludedWithUsing]::One
@@ -16,5 +21,6 @@ function Get-MyEnumInSeparateFileIncludedWithUsingWithParameter([MyEnumInSeparat
 }
 
 Export-ModuleMember -Function Get-MyClassInSeparateFileIncludedWithUsing
+Export-ModuleMember -Function Get-MyClassInSeparateFileIncludedWithUsingWithParameter
 Export-ModuleMember -Function Get-MyEnumInSeparateFileIncludedWithUsing
 Export-ModuleMember -Function Get-MyEnumInSeparateFileIncludedWithUsingWithParameter
