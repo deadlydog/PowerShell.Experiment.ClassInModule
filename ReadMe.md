@@ -33,7 +33,7 @@ Each Pester test file is duplicated so it can reference the module in 2 ways:
 - Using `using module` to import the module.
 - Using `Import-Module` to import the module.
 
-In addition to defining classes in various ways and testing them, we also define and tests enums in the same ways to see if they suffer from the same issues.
+In addition to defining classes in various ways and testing them, I also define and tests enums in the same ways to see if they suffer from the same issues.
 
 ## Reproducing the issue (e.g. running the experiment)
 
@@ -61,30 +61,42 @@ The results of using the different methods to reference a class/enum in the modu
 | -------------------------------------------- | ------------------------------------------ | --------------------------------------------- |
 | Class/Enum file imported with `using module` | ❌                                         | ❌                                            |
 | Class/Enum file imported with Dot-sourcing   | ✔️                                         | ❌                                            |
-| Class/Enum defined in psm1 file              | ✔️                                         | ✔️                                            |
+| Class/Enum defined in the psm1 file          | ✔️                                         | ✔️                                            |
 
-If we use `using module` to import the file with the class, then the class cannot be used by the module functions, and the class type cannot be used outside of the module.
+If I use `using module` to import the file with the class, then the class cannot be used by the module functions, and the class type cannot be used outside of the module.
 
-If we dot-source the file with the class, then the class can be used by the module functions, but the class type still cannot be used outside of the module.
+If I dot-source the file with the class, then the class can be used by the module functions, but the class type still cannot be used outside of the module.
+This means that while the module functions can output objects of the class type, they cannot use the the class type for any module function parameters; you get the `Unable to find type` error.
 
-If we define the class in the psm1 file, then the class can be used by the module functions, and the class type can be used outside of the module.
+If I define the class in the psm1 file, then the class can be used by the module functions (both as output and input parameters), and the class type can be used outside of the module.
 
-Enums behave the same as classes with regard to these tests.
+Enums behaved the same as classes in all of the tests that were performed.
 
 ### Referencing the module
 
-We also tested the 2 different ways a module can be imported:
+I also tested the 2 different ways a module can be imported; with `Import-Module` and `using module`.
+An important distinction between the two is that `Import-Module` is a cmdlet that is versioned and can be updated in newer PowerShell versions, while `using module` is a language keyword, like `if` or `foreach`.
+The two are fundamentally different, and behave differently when importing modules.
+
+The results below assume the class/enum is referenced directly in the psm1 file:
 
 |                                      | Class/Enum can be used by module functions | Class/Enum type can be used outside of module |
 | ------------------------------------ | ------------------------------------------ | --------------------------------------------- |
 | Module imported with `Import-Module` | ✔️                                         | ❌                                           |
 | Module imported with `using module`  | ✔️                                         | ✔️                                           |
 
+If you use `Import-Module` to import the module, you can use the class/enum values implicitly, and autocomplete will work.
+By implicitly, I mean that you can retrieve a class/enum instance from a module function, pass the instance around, modify the class properties, and pass it back into module function parameters.
+
+You cannot use the class/enum type explicitly outside of the module though.
+That is, you cannot create a new instance of the class, or reference the enum values directly, such as performing a `switch` statement on them.
+As soon as you need to reference the class/enum type in your script (e.g. `[MyClass]` or `[MyEnum]`), you will get the `Unable to find type` error.
+
 The only way to be able to reference the class/enum types outside of the module is to import the module with `using module`.
 
 ## Conclusion
 
-The best approach, as of PowerShell version 7.1.3, is to define the class/enum directly in the psm1 file of the module.
+The best approach, as of PowerShell version 7.3.6, is to define the class/enum directly in the psm1 file of the module.
 Also, modules should be imported with `using module` if you want to be able to use the class/enum types outside of the module.
 
 If you really want to have your classes/enums in separate files, and you don't intend for the class/enum types to be used outside of the module, then you can use dot-sourcing to import the class file and use `Import-Module` to import the module.
