@@ -1,0 +1,26 @@
+. "$PSScriptRoot\Classes\MyCSharpClassInSeparateFileIncludedWithDotSourcing.ps1"
+
+function Get-MyCSharpClassInSeparateFileIncludedWithDotSourcing
+{
+	return [MyNamespace.MyCSharpClassInSeparateFileIncludedWithDotSourcing]::new()
+}
+
+function Get-MyCSharpClassInSeparateFileIncludedWithDotSourcingWithParameter([MyNamespace.MyCSharpClassInSeparateFileIncludedWithDotSourcing] $instance)
+{
+	return $instance
+}
+
+function Get-MyCSharpEnumInSeparateFileIncludedWithDotSourcing
+{
+	return [MyNamespace.MyCSharpEnumInSeparateFileIncludedWithDotSourcing]::One
+}
+
+function Get-MyCSharpEnumInSeparateFileIncludedWithDotSourcingWithParameter([MyNamespace.MyCSharpEnumInSeparateFileIncludedWithDotSourcing] $enumValue)
+{
+	return $enumValue
+}
+
+Export-ModuleMember -Function Get-MyCSharpClassInSeparateFileIncludedWithDotSourcing
+Export-ModuleMember -Function Get-MyCSharpClassInSeparateFileIncludedWithDotSourcingWithParameter
+Export-ModuleMember -Function Get-MyCSharpEnumInSeparateFileIncludedWithDotSourcing
+Export-ModuleMember -Function Get-MyCSharpEnumInSeparateFileIncludedWithDotSourcingWithParameter
