@@ -54,6 +54,8 @@ My local machine must somehow be caching the types, even across new and separate
 
 ## Experiment results
 
+To ensure my local machine was not impacting the results, all results shown below are from running the tests in GitHub Actions.
+
 ### Referencing the class/enum in the module
 
 The results of using the different methods to reference a class/enum in the module are as follows:
