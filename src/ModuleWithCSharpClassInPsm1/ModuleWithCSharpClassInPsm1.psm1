@@ -1,5 +1,4 @@
 Add-Type -Language CSharp -TypeDefinition @"
-namespace MyNamespace {
 	public enum MyCSharpEnumInPsm1
 	{
 		One,
@@ -10,25 +9,24 @@ namespace MyNamespace {
 	{
 		public MyCSharpEnumInPsm1 EnumValue { get; set; }
 	}
-}
 "@
 
 function Get-MyCSharpClassInPsm1
 {
-	return [MyNamespace.MyCSharpClassInPsm1]::new()
+	return [MyCSharpClassInPsm1]::new()
 }
 
-function Get-MyCSharpClassInPsm1WithParameter([MyNamespace.MyCSharpClassInPsm1] $instance)
+function Get-MyCSharpClassInPsm1WithParameter([MyCSharpClassInPsm1] $instance)
 {
 	return $instance
 }
 
 function Get-MyCSharpEnumInPsm1
 {
-	return [MyNamespace.MyCSharpEnumInPsm1]::One
+	return [MyCSharpEnumInPsm1]::One
 }
 
-function Get-MyCSharpEnumInPsm1WithParameter([MyNamespace.MyCSharpEnumInPsm1] $enumValue)
+function Get-MyCSharpEnumInPsm1WithParameter([MyCSharpEnumInPsm1] $enumValue)
 {
 	return $enumValue
 }

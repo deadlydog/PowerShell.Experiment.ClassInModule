@@ -1,14 +1,12 @@
 Add-Type -Language CSharp -TypeDefinition @"
-namespace MyNamespace {
-	public enum MyCSharpEnumInSeparateFileIncludedWithUsing
+	public enum MyCSharpEnumInPsm1
 	{
 		One,
 		Two
 	}
 
-	public class MyCSharpClassInSeparateFileIncludedWithUsing
+	public class MyCSharpClassInPsm1
 	{
-		public MyCSharpEnumInSeparateFileIncludedWithUsing EnumValue { get; set; }
+		public MyCSharpEnumInPsm1 EnumValue { get; set; }
 	}
-}
 "@

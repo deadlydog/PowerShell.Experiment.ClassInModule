@@ -7,7 +7,7 @@ Describe 'Module' {
 	}
 
 	It 'Should allow using the class type explicitly' {
-		$instance = [MyNamespace.MyCSharpClassInSeparateFileIncludedWithDotSourcing]::new()
+		$instance = [MyCSharpClassInSeparateFileIncludedWithDotSourcing]::new()
 		$instance | Should -Not -Be $null
 	}
 
@@ -18,7 +18,7 @@ Describe 'Module' {
 	}
 
 	It 'Should allow using the class type explicitly as a function parameter' {
-		$explicitInstance = [MyNamespace.MyCSharpClassInSeparateFileIncludedWithDotSourcing]::new()
+		$explicitInstance = [MyCSharpClassInSeparateFileIncludedWithDotSourcing]::new()
 		$instance = Get-MyCSharpClassInSeparateFileIncludedWithDotSourcingWithParameter -instance $explicitInstance
 		$instance | Should -Not -Be $null
 	}
@@ -29,12 +29,12 @@ Describe 'Module' {
 	}
 
 	It 'Should allow using the enum type explicitly' {
-		$enumValue = [MyNamespace.MyCSharpEnumInSeparateFileIncludedWithDotSourcing]::One
+		$enumValue = [MyCSharpEnumInSeparateFileIncludedWithDotSourcing]::One
 		$enumValue | Should -Be 'One'
 	}
 
 	It 'Should allow using the full enum type as a function parameter' {
-		$enumValue = Get-MyCSharpEnumInSeparateFileIncludedWithDotSourcingWithParameter -enumValue ([MyNamespace.MyCSharpEnumInSeparateFileIncludedWithDotSourcing]::One)
+		$enumValue = Get-MyCSharpEnumInSeparateFileIncludedWithDotSourcingWithParameter -enumValue ([MyCSharpEnumInSeparateFileIncludedWithDotSourcing]::One)
 		$enumValue | Should -Be 'One'
 	}
 

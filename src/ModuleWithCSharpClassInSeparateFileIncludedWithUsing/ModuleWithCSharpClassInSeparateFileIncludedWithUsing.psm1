@@ -2,20 +2,20 @@ using module .\Classes\MyCSharpClassInSeparateFileIncludedWithUsing.ps1
 
 function Get-MyCSharpClassInSeparateFileIncludedWithUsing
 {
-	return [MyNamespace.MyCSharpClassInSeparateFileIncludedWithUsing]::new()
+	return [MyCSharpClassInSeparateFileIncludedWithUsing]::new()
 }
 
-function Get-MyCSharpClassInSeparateFileIncludedWithUsingWithParameter([MyNamespace.MyCSharpClassInSeparateFileIncludedWithUsing] $instance)
+function Get-MyCSharpClassInSeparateFileIncludedWithUsingWithParameter([MyCSharpClassInSeparateFileIncludedWithUsing] $instance)
 {
 	return $instance
 }
 
 function Get-MyCSharpEnumInSeparateFileIncludedWithUsing
 {
-	return [MyNamespace.MyCSharpEnumInSeparateFileIncludedWithUsing]::One
+	return [MyCSharpEnumInSeparateFileIncludedWithUsing]::One
 }
 
-function Get-MyCSharpEnumInSeparateFileIncludedWithUsingWithParameter([MyNamespace.MyCSharpEnumInSeparateFileIncludedWithUsing] $enumValue)
+function Get-MyCSharpEnumInSeparateFileIncludedWithUsingWithParameter([MyCSharpEnumInSeparateFileIncludedWithUsing] $enumValue)
 {
 	return $enumValue
 }

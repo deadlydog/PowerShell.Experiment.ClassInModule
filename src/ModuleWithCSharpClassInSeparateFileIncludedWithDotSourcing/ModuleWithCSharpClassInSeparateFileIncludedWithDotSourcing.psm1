@@ -2,20 +2,20 @@
 
 function Get-MyCSharpClassInSeparateFileIncludedWithDotSourcing
 {
-	return [MyNamespace.MyCSharpClassInSeparateFileIncludedWithDotSourcing]::new()
+	return [MyCSharpClassInSeparateFileIncludedWithDotSourcing]::new()
 }
 
-function Get-MyCSharpClassInSeparateFileIncludedWithDotSourcingWithParameter([MyNamespace.MyCSharpClassInSeparateFileIncludedWithDotSourcing] $instance)
+function Get-MyCSharpClassInSeparateFileIncludedWithDotSourcingWithParameter([MyCSharpClassInSeparateFileIncludedWithDotSourcing] $instance)
 {
 	return $instance
 }
 
 function Get-MyCSharpEnumInSeparateFileIncludedWithDotSourcing
 {
-	return [MyNamespace.MyCSharpEnumInSeparateFileIncludedWithDotSourcing]::One
+	return [MyCSharpEnumInSeparateFileIncludedWithDotSourcing]::One
 }
 
-function Get-MyCSharpEnumInSeparateFileIncludedWithDotSourcingWithParameter([MyNamespace.MyCSharpEnumInSeparateFileIncludedWithDotSourcing] $enumValue)
+function Get-MyCSharpEnumInSeparateFileIncludedWithDotSourcingWithParameter([MyCSharpEnumInSeparateFileIncludedWithDotSourcing] $enumValue)
 {
 	return $enumValue
 }
