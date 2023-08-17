@@ -17,11 +17,14 @@ Even stranger, is that this issue does not happen on my local machine, but does 
 
 ## The experiment
 
-This repo contains 3 modules:
+This repo contains 6 modules:
 
-1. One with the class defined in a separate file and imported [via a `using module` statement](/src/ModuleWithClassInSeparateFileIncludedWithUsing/ModuleWithClassInSeparateFileIncludedWithUsing.psm1).
-1. One with the class defined in a separate file and imported [via dot-sourcing](/src/ModuleWithClassInSeparateFileIncludedWithDotSourcing/ModuleWithClassInSeparateFileIncludedWithDotSourcing.psm1).
-1. One with the class defined [in the psm1 file](/src/ModuleWithClassInPsm1/ModuleWithClassInPsm1.psm1).
+1. One with a PowerShell class defined in a separate file and imported [via a `using module` statement](/src/ModuleWithClassInSeparateFileIncludedWithUsing/ModuleWithClassInSeparateFileIncludedWithUsing.psm1).
+1. One with a PowerShell class defined in a separate file and imported [via dot-sourcing](/src/ModuleWithClassInSeparateFileIncludedWithDotSourcing/ModuleWithClassInSeparateFileIncludedWithDotSourcing.psm1).
+1. One with a PowerShell class defined [in the psm1 file](/src/ModuleWithClassInPsm1/ModuleWithClassInPsm1.psm1).
+1. One with a C# class defined in a separate file and imported [via a `using module` statement](/src/ModuleWithCSharpClassInSeparateFileIncludedWithUsing/ModuleWithCSharpClassInSeparateFileIncludedWithUsing.psm1).
+1. One with a C# class defined in a separate file and imported [via dot-sourcing](/src/ModuleWithCSharpClassInSeparateFileIncludedWithDotSourcing/ModuleWithCSharpClassInSeparateFileIncludedWithDotSourcing.psm1).
+1. One with a C# class defined [in the psm1 file](/src/ModuleWithCSharpClassInPsm1/ModuleWithCSharpClassInPsm1.psm1).
 
 Each module contains Pester tests to test:
 
@@ -51,14 +54,15 @@ To try and remove my local machine from the equation, I created a Dev Container 
 Initially using the Dev Container produced the same results as the GitHub Action.
 However,the next day it was producing the same results as when running on my local machine.
 My local machine must somehow be caching the types, even across new and separate PowerShell sessions.
+It is weird that the Dev Container also produces mixed results.
 
 ## Experiment results
 
-To ensure my local machine was not impacting the results, all results shown below are from running the tests in GitHub Actions.
+To ensure my local machine is not impacting the results, all results shown below are from running the tests in GitHub Actions.
 
-### Referencing the class/enum in the module
+### Referencing the PowerShell class/enum in the module
 
-The results of using the different methods to reference a class/enum in the module are as follows:
+The results of using the different methods to reference a PowerShell native class/enum in the script module are as follows:
 
 |                                              | Class/Enum can be used by module functions | Class/Enum type can be used outside of module |
 | -------------------------------------------- | ------------------------------------------ | --------------------------------------------- |
@@ -67,9 +71,10 @@ The results of using the different methods to reference a class/enum in the modu
 | Class/Enum defined in the psm1 file          | ✔️                                         | ✔️                                            |
 
 If I use `using module` to import the file with the class, then the class cannot be used by the module functions, and the class type cannot be used outside of the module.
+Simply put, it does not work at all.
 
 If I dot-source the file with the class, then the class can be used by the module functions, but the class type still cannot be used outside of the module.
-This means that while the module functions can output objects of the class type, they cannot use the the class type for any module function parameters; you get the `Unable to find type` error.
+Anytime the class name is referenced you get the `Unable to find type` error.
 
 If I define the class in the psm1 file, then the class can be used by the module functions (both as output and input parameters), and the class type can be used outside of the module.
 
@@ -81,7 +86,7 @@ I also tested the 2 different ways a module can be imported; with `Import-Module
 An important distinction between the two is that `Import-Module` is a cmdlet that is versioned and can be updated in newer PowerShell versions, while `using module` is a language keyword, like `if` or `foreach`.
 The two are fundamentally different, and behave differently when importing modules.
 
-The results below assume the class/enum is referenced directly in the psm1 file:
+The results below assume the class/enum is referenced directly in the psm1 file for script modules, as that is the recommended approach to take after seeing the results from the previous section.
 
 |                                      | Class/Enum can be used by module functions | Class/Enum type can be used outside of module |
 | ------------------------------------ | ------------------------------------------ | --------------------------------------------- |
@@ -93,15 +98,60 @@ By implicitly, I mean that you can retrieve a class/enum instance from a module 
 
 You cannot use the class/enum type explicitly outside of the module though.
 That is, you cannot create a new instance of the class, or reference the enum values directly, such as performing a `switch` statement on them.
-As soon as you need to reference the class/enum type in your script (e.g. `[MyClass]` or `[MyEnum]`), you will get the `Unable to find type` error.
+As soon as you need to reference the class/enum name in your script (e.g. `[MyClass]` or `[MyEnum]`), you will get the `Unable to find type` error.
 
-The only way to be able to reference the class/enum types outside of the module is to import the module with `using module`.
+The only way to be able to reference the class/enum name outside of the module is to import the module with `using module`.
+I did not explicitly test this using a binary module, but I expect the results would be the same.
+
+### Referencing a C# class/enum in the module
+
+Rather than using the PowerShell native classes and enums, we can define C# classes and enums inline in PowerShell as a string.
+This even works in pre-PowerShell 5 versions.
+It is a bit ugly, as you lose syntax highlighting and editor intellisense and checks, and you need to write the code as C# instead of PowerShell, but it does work.
+
+Here is what the equivalent definition of the example PowerShell native class and enum shown earlier would look like when defining them as a C# class and enum in your PowerShell script or module:
+
+```csharp
+Add-Type -Language CSharp -TypeDefinition @"
+  public class MyClass {
+      public string Name { get; set; }
+      public int Age { get; set; }
+  }
+
+  public enum MyEnum {
+      Value1
+      Value2
+  }
+"@
+```
+
+We could optionally put our class and enum in a namespace as well (e.g. `MyNamespace`), and then reference their types in PowerShell like `[MyNamespace.MyClass]` and `[MyNamespace.MyEnum]`.
+Using namespaces can help avoid naming conflicts for common class names.
+
+Using C# classes and enums as shown above instead of the PowerShell native class/enum, the results are as follows:
+
+|                                              | C# Class/Enum can be used by module functions | C# Class/Enum type can be used outside of module |
+| -------------------------------------------- | ------------------------------------------ | --------------------------------------------- |
+| Class/Enum file imported with `using module` | ✔️                                         | ✔️                                            |
+| Class/Enum file imported with Dot-sourcing   | ✔️                                         | ✔️                                            |
+| Class/Enum defined in the psm1 file          | ✔️                                         | ✔️                                            |
+
+|                                      | C# Class/Enum can be used by module functions | C# Class/Enum type can be used outside of module |
+| ------------------------------------ | ------------------------------------------ | --------------------------------------------- |
+| Module imported with `Import-Module` | ✔️                                         | ✔️                                           |
+| Module imported with `using module`  | ✔️                                         | ✔️                                           |
+
+You can see that using C# classes/enums is much more flexible than using the PowerShell native classes/enums.
+They allow us to define the classes/enums in their own files, and allow end-users to use `Import-Module` and still have full access to the class/enum types.
+The downsides are that they are a bit ugly as inline strings, and you need to know the C# syntax instead of PowerShell syntax.
 
 ## Conclusion
 
-The best approach, as of PowerShell version 7.3.6, is to define the class/enum directly in the psm1 file of the module.
+If using PowerShell native classes/enums, the best approach, as of PowerShell version 7.3.6, is to define the class/enum directly in the psm1 file of the module.
 Also, modules should be imported with `using module` if you want to be able to use the class/enum types outside of the module.
 
-If you really want to have your classes/enums in separate files, and you don't intend for the class/enum types to be used outside of the module, then you can use dot-sourcing to import the class file and use `Import-Module` to import the module.
+If you really want to have your PowerShell native classes/enums in separate files, and you don't intend for the class/enum types to be used outside of the module, then you can use dot-sourcing to import the class file and use `Import-Module` to import the module.
 
-Hopefully a future version of PowerShell will allow us to dot-source import classes/enums from other files and still be able to use their types both within and outside the module.
+If you don't want to have to remember the limitations and how to work around them, then use C# classes/enums instead of PowerShell ones.
+
+Hopefully a future version of PowerShell will allow us to dot-source import classes/enums from other files and still be able to use their types both within and outside the module, and make the native PowerShell class/enum experience better.
