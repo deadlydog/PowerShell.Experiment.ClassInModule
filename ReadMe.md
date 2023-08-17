@@ -39,16 +39,17 @@ In addition to defining classes in various ways and testing them, I also define 
 
 This repo defines a VS Code `test` task for running Pester locally, as well as a GitHub Actions workflow for running Pester on the build server.
 
-When I run the `test` task locally from VS Code (e.g. run the `Tasks: Run Test Task` from the command palette), the local psm1 and `using module` modules pass all tests.
+When I run the `test` task locally from VS Code (e.g. run the `Tasks: Run Test Task` from the command palette), both the `ModuleWithClassInPsm1` and `ModuleWithClassInSeparateFileIncludedWithUsing` modules pass all tests.
 You could also simply run `Invoke-Pester` from the PowerShell terminal at the repo root directory to run the tests.
 
-When Pester runs on the build server with GitHub Actions though, the `using module` module fails with the error above.
+When Pester runs on the build server with GitHub Actions though, the `ModuleWithClassInSeparateFileIncludedWithUsing` module fails with the error above.
 See [the failing GitHub Action workflow](https://github.com/deadlydog/PowerShell.Experiment.ClassInModule/actions/workflows/build-and-test-powershell-module.yml) for the error message details.
 
 [![build and test workflow](https://github.com/deadlydog/PowerShell.Experiment.ClassInModule/actions/workflows/build-and-test-powershell-module.yml/badge.svg)](https://github.com/deadlydog/PowerShell.Experiment.ClassInModule/actions/workflows/build-and-test-powershell-module.yml)
 
-Update: To remove my local machine from the equation, I created a Dev Container that can be used to run the VS Code `test` task locally from a Docker container.
-Using the Dev Container produces the same results as the GitHub Action.
+To try and remove my local machine from the equation, I created a Dev Container that can be used to run the VS Code `test` task locally from a Docker container.
+Initially using the Dev Container produced the same results as the GitHub Action.
+However,the next day it was producing the same results as when running on my local machine.
 My local machine must somehow be caching the types, even across new and separate PowerShell sessions.
 
 ## Experiment results
