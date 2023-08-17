@@ -4,6 +4,8 @@ This is a test repo to reproduce an issue I am having with Pester not finding th
 
 This repo implements several different approaches to using a class and an enum in a module to see what works and what doesn't.
 
+You can also find additional related information [in this blog post](https://blog.danskingdom.com/How-and-where-to-properly-define-classes-and-enums-in-your-PowerShell-modules/).
+
 ## The problem
 
 I would like to have each class defined in its own file, and then import the class file into the psm1 file of the module using `using module` or dot-sourcing.
