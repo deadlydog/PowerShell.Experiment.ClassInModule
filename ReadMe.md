@@ -60,13 +60,14 @@ It is weird that the Dev Container also produces mixed results.
 
 ## Experiment results
 
+PowerShell version 7.2.13 was used to produce these results.
 To ensure my local machine was not impacting the results, all results shown below are from running the tests in GitHub Actions, on both Windows and Linux agents.
 
 ### Referencing the PowerShell class/enum in the module
 
 To include a class/enum that I created within the module, I tried 3 different methods:
 
-1. With "using module" in the psm1 file:  `using module .\Classes\MyClass.ps1`
+1. With "using module" in the psm1 file: `using module .\Classes\MyClass.ps1`
 1. With dot-sourcing in the psm1 file: `. "$PSScriptRoot\Classes\MyClass.ps1`
 1. Defining the class/enum directly in the psm1 file, instead of in its own file.
 
